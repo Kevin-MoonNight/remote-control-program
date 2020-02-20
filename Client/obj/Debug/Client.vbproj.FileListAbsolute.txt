@@ -1,0 +1,10 @@
+C:\Users\k0937\Desktop\遠端控制程式分割後\控制端\介面\Client\bin\Debug\Client.exe.config
+C:\Users\k0937\Desktop\遠端控制程式分割後\控制端\介面\Client\bin\Debug\Client.exe
+C:\Users\k0937\Desktop\遠端控制程式分割後\控制端\介面\Client\bin\Debug\Client.pdb
+C:\Users\k0937\Desktop\遠端控制程式分割後\控制端\介面\Client\bin\Debug\Client.xml
+C:\Users\k0937\Desktop\遠端控制程式分割後\控制端\介面\Client\obj\Debug\Client.Form1.resources
+C:\Users\k0937\Desktop\遠端控制程式分割後\控制端\介面\Client\obj\Debug\Client.Resources.resources
+C:\Users\k0937\Desktop\遠端控制程式分割後\控制端\介面\Client\obj\Debug\Client.vbproj.GenerateResource.cache
+C:\Users\k0937\Desktop\遠端控制程式分割後\控制端\介面\Client\obj\Debug\Client.exe
+C:\Users\k0937\Desktop\遠端控制程式分割後\控制端\介面\Client\obj\Debug\Client.xml
+C:\Users\k0937\Desktop\遠端控制程式分割後\控制端\介面\Client\obj\Debug\Client.pdb
