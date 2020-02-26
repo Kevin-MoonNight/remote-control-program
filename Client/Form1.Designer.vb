@@ -69,6 +69,7 @@ Partial Class Form1
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(387, 25)
         Me.TextBox1.TabIndex = 20
+        Me.TextBox1.Text = "192.168.0.12"
         '
         'Form1
         '
@@ -79,6 +80,7 @@ Partial Class Form1
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.TextBox1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "Form1"
