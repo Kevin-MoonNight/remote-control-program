@@ -1,10 +1,12 @@
 ﻿Imports System.Net
 Imports System.Net.Sockets
+Imports System.Text
 Imports System.Threading
 Imports System.IO
 Public Class Form1
     '主機端
     Dim picture_transmission_listen As TcpListener '畫面傳輸socket
+    Dim control_command_client As New TcpClient '鍵鼠控制socket
     Dim client_socket As Socket
     Delegate Sub button_text_change(ByVal str As String) '委派 更改按鈕文字
     Delegate Sub label_text_change(ByVal str As String) '委派 更改標籤文字
@@ -35,10 +37,16 @@ Public Class Form1
     Sub connect_socket()
         '監聽 畫面傳輸socket
         listen_picture_transmission()
+        '連接 鍵鼠控制socket
+        connect_control_command()
         '更新畫面
         change_controls_text("連線成功!", "斷開連接")
         '開始傳送圖片
         Me.Invoke(New timer_start(AddressOf picture_start), New Object() {True}) '開啟 計時器傳送畫面
+        '接收 控制命令
+        '背景執行
+        Dim receive_control As New Thread(AddressOf receive_control_command)
+        receive_control.IsBackground = True : receive_control.Start()
     End Sub '連接 socket
 
     Sub setip()
@@ -53,6 +61,10 @@ Public Class Form1
         picture_transmission_listen.Start()  '開始監聽
         client_socket = picture_transmission_listen.AcceptSocket '回傳Socket與新進連接的用戶端來通訊
     End Sub '監聽 畫面傳輸socket
+    Sub connect_control_command()
+        control_command_client = New TcpClient
+        control_command_client.Connect(Split(client_socket.RemoteEndPoint.ToString, ":")(0), 4444)
+    End Sub '連接 鍵鼠控制socket
 
     Private Sub picture_tick(sender As Object, e As EventArgs) Handles picture.Tick '每16毫秒傳送一張畫面(60幀)
         Try '螢幕截圖轉成Byte寫入資料流
@@ -85,6 +97,74 @@ Public Class Form1
     End Function '圖片轉成Byte
 
 
+    Sub receive_control_command()
+        Dim networkstream As NetworkStream = control_command_client.GetStream
+        Do
+            Threading.Thread.Sleep(0)
+            If networkstream.CanRead = True Then '有資料可以讀取
+                Try
+                    '判斷控制命令文字 執行控制動作
+                    judgment_control(Strings.Replace(byte_to_string(read_control_data(networkstream)), vbNullChar, ""))
+                Catch ex As Exception
+                    If client_socket.Connected = False Then
+                        Exit Do
+                    End If
+                End Try
+            End If
+        Loop
+    End Sub '接收 控制命令
+    Function read_control_data(ByVal networkstream As NetworkStream) As Byte()
+        Dim control_byte(50) As Byte
+        networkstream.Read(control_byte, 0, 50)
+        Return control_byte
+    End Function '讀取 控制命令
+    Function byte_to_string(ByVal control_byte() As Byte) As String
+        Return Encoding.GetEncoding(950).GetString(control_byte)
+    End Function 'byte轉回string格式
+
+    Sub judgment_control(ByVal str As String)
+        Dim control_command() As String = Split(str, " ")
+        Select Case control_command(0)
+            Case "move" '如果是滑鼠移動
+                move_mouse((Val(control_command(1)) * Screen.PrimaryScreen.Bounds.Width).ToString("0"), (Val(control_command(2)) * Screen.PrimaryScreen.Bounds.Height).ToString("0"))
+            Case "mouse" '如果是滑鼠類的控制
+                mouse(Val(control_command(1)), control_command(2))
+            Case "wheel"
+                wheel(Val(control_command(1)))
+            Case "keyboard" '如果是鍵盤類的控制
+                keyboard(Val(control_command(1)), control_command(2))
+        End Select
+    End Sub '判斷 控制命令
+    Sub mouse(ByVal control_command1 As Integer, ByVal control_command2 As String)
+        Select Case control_command1 '判斷是按下哪個鍵
+            Case MouseButtons.Left '如果是左鍵
+                If control_command2 = "down" Then
+                    left_down()
+                ElseIf control_command2 = "up" Then
+                    left_up()
+                End If
+            Case MouseButtons.Right '如果是右鍵
+                If control_command2 = "down" Then
+                    right_down()
+                ElseIf control_command2 = "up" Then
+                    right_up()
+                End If
+            Case MouseButtons.Middle '如果是中鍵 
+                If control_command2 = "down" Then
+                    middle_down()
+                ElseIf control_command2 = "up" Then
+                    middle_up()
+                End If
+        End Select
+    End Sub '執行滑鼠動作
+    Sub keyboard(ByVal control_command1 As Integer, ByVal control_command2 As String)
+        If control_command2 = "down" Then '如果是按下
+            keyboard_down(control_command1)
+        ElseIf control_command2 = "up" Then '如果是放開
+            keyboard_up(control_command1)
+        End If
+    End Sub '執行鍵盤動作
+
     Sub change_controls_text(ByVal labelstr As String, ByVal buttonstr As String)
         Me.Invoke(New label_text_change(AddressOf change_label), New Object() {labelstr}) '委派更改標籤文字 
         Me.Invoke(New button_text_change(AddressOf change_button), New Object() {buttonstr}) '委派更改按鈕文字
@@ -93,6 +173,7 @@ Public Class Form1
         '初始化
         client_socket.Close()
         picture_transmission_listen.Stop()
+        control_command_client.Close() : control_command_client = New TcpClient
         '更新畫面
         change_controls_text("", "開始")
         '開關計時器傳送畫面

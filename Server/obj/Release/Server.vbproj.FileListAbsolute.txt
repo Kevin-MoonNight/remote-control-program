@@ -9,14 +9,3 @@ C:\Users\k0937\Desktop\遠端控制程式(重構)\Server\obj\Release\Server.vbpr
 C:\Users\k0937\Desktop\遠端控制程式(重構)\Server\obj\Release\Server.exe
 C:\Users\k0937\Desktop\遠端控制程式(重構)\Server\obj\Release\Server.xml
 C:\Users\k0937\Desktop\遠端控制程式(重構)\Server\obj\Release\Server.pdb
-C:\Users\k0937\Desktop\遠端控制程式分割後\被控制端\圖片傳輸\圖片\Server\bin\Release\Server.exe.config
-C:\Users\k0937\Desktop\遠端控制程式分割後\被控制端\圖片傳輸\圖片\Server\bin\Release\Server.exe
-C:\Users\k0937\Desktop\遠端控制程式分割後\被控制端\圖片傳輸\圖片\Server\bin\Release\Server.pdb
-C:\Users\k0937\Desktop\遠端控制程式分割後\被控制端\圖片傳輸\圖片\Server\bin\Release\Server.xml
-C:\Users\k0937\Desktop\遠端控制程式分割後\被控制端\圖片傳輸\圖片\Server\obj\Release\Server.vbprojAssemblyReference.cache
-C:\Users\k0937\Desktop\遠端控制程式分割後\被控制端\圖片傳輸\圖片\Server\obj\Release\Server.Form1.resources
-C:\Users\k0937\Desktop\遠端控制程式分割後\被控制端\圖片傳輸\圖片\Server\obj\Release\Server.Resources.resources
-C:\Users\k0937\Desktop\遠端控制程式分割後\被控制端\圖片傳輸\圖片\Server\obj\Release\Server.vbproj.GenerateResource.cache
-C:\Users\k0937\Desktop\遠端控制程式分割後\被控制端\圖片傳輸\圖片\Server\obj\Release\Server.exe
-C:\Users\k0937\Desktop\遠端控制程式分割後\被控制端\圖片傳輸\圖片\Server\obj\Release\Server.xml
-C:\Users\k0937\Desktop\遠端控制程式分割後\被控制端\圖片傳輸\圖片\Server\obj\Release\Server.pdb
