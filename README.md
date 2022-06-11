@@ -1,5 +1,5 @@
 # RemoteControlProgram
-RemoteControlProgram
+像是TeamViewer
 
 總共有兩個檔案
 控制端（client）
